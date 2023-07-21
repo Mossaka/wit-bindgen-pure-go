@@ -1,0 +1,1 @@
+# wit-bindgen-pure-go
