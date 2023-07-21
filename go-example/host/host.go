@@ -1,28 +1,26 @@
 package host
 
-// #include "host.h"
-import "C"
+import "unsafe"
 
-// Import functions from host
+//go:wasmimport $root print
+func hostPrint(ptr0, len0 int32)
+
 func HostPrint(msg string) {
-  var lower_msg C.host_string_t
-  
-  lower_msg.ptr = C.CString(msg)
-  lower_msg.len = C.size_t(len(msg))
-  defer C.host_string_free(&lower_msg)
-  C.host_print(&lower_msg)
+	hostPrint(*(*int32)(unsafe.Pointer(&msg)), int32(len(msg)))
 }
 
 // Export functions from host
 var host Host = nil
+
 func SetHost(i Host) {
-  host = i
+	host = i
 }
+
 type Host interface {
-  Run() 
+	Run()
 }
-//export host_run
+
+//go:export run
 func HostRun() {
-  host.Run()
-  
+	host.Run()
 }

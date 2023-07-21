@@ -38,7 +38,7 @@ build-rust: $(RUST_EXAMPLE).wasm
 	$(WASM_TOOLS_BIN) component wit component.$<
 
 $(GO_EXAMPLE).wasm:
-	./bin/wit-bindgen tiny-go ./go-example/wit/host.wit --out-dir ./go-example/host
+	# ./bin/wit-bindgen tiny-go ./go-example/wit/host.wit --out-dir ./go-example/host
 	cd go-example && tinygo build -target=wasi -o $@ main.go && \
 	mv $@ ../$@
 
